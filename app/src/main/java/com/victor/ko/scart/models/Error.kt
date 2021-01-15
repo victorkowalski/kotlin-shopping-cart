@@ -1,4 +1,4 @@
-package com.victor.ko.shopping_cart.models
+package com.victor.ko.scart.models
 
 import com.google.gson.annotations.SerializedName
 

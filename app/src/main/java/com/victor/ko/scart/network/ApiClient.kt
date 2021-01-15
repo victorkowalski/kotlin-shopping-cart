@@ -1,6 +1,6 @@
-package com.victor.ko.shopping_cart.network
+package com.victor.ko.scart.network
 
-import com.victor.ko.shopping_cart.models.PIN
+import com.victor.ko.scart.models.PIN
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

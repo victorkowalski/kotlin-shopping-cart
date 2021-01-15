@@ -1,7 +1,7 @@
-package com.victor.ko.shopping_cart.utils
+package com.victor.ko.scart.utils
 
 import android.content.Context
-import com.victor.ko.shopping_cart.app.SCartApplication
+import com.victor.ko.scart.app.SCartApplication
 import okhttp3.*
 
 class MockRequestInterceptor() : Interceptor {

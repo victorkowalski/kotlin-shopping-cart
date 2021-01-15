@@ -1,4 +1,4 @@
-package com.victor.ko.shopping_cart.app
+package com.victor.ko.scart.app
 
 import android.app.Application
 import android.content.Context
@@ -12,6 +12,6 @@ class SCartApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        SCartApplication.context = applicationContext
+        context = applicationContext
     }
 }
