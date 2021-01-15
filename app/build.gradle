@@ -48,6 +48,9 @@ dependencies {
     implementation 'ru.egslava:MaskedEditText:1.0.5'
     //UI binding
     //implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    //network
+    implementation 'com.squareup.retrofit2:retrofit:2.8.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     //test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
