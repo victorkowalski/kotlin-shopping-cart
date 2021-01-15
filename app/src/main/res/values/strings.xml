@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">E-Bash</string>
+    <string name="app_name">ShoppingCart</string>
 
     <string name="catalog">Каталог</string>
     <string name="basket">Корзина</string>
