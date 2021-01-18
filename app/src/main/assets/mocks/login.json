@@ -1,0 +1,12 @@
+{
+	"success": {
+			"customer_id": "111",
+			"getPossibleMethods": "1,2,3",
+			"phone": "123",
+			"token": "555"
+		},
+	"error": {
+			"error": "123",
+			"message": "123"
+		}
+}

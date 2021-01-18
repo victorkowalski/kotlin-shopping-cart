@@ -1,0 +1,55 @@
+{
+  "success": {
+    "goods":[
+      {
+        "id": "1",
+        "product_id": "1",
+        "title": "title",
+        "quantity": "2",
+        "price": "45.5",
+        "discount": "2",
+        "image": "String",
+        "total": "555"
+      },
+      {
+        "id": "2",
+        "product_id": "2",
+        "title": "title2",
+        "quantity": "2",
+        "price": "45.5",
+        "discount": "2",
+        "image": "String",
+        "total": "44"
+      }
+    ],
+
+    "additionals":[
+      {
+        "title": "tittlAdd",
+        "products": [
+          {
+            "id": "1",
+            "title": "tiltlttt",
+            "price": "22.4",
+            "discount": "1",
+            "type": "type",
+            "image": "img"
+          },
+          {
+            "id": "2",
+            "title": "tiltlttt22",
+            "price": "21.4",
+            "discount": "1",
+            "type": "type",
+            "image": "img"
+          }
+        ]
+
+      }]
+
+  },
+  "error": {
+    "error": "123",
+    "message": "123"
+  }
+}

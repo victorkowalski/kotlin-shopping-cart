@@ -1,0 +1,36 @@
+{
+	"success": {
+		"catalog": [
+			/*val catalog: List<CatalogItem?>?*/
+			{"description": }
+			@SerializedName("")
+			val description: String?,
+			@SerializedName("filter_ocfilter")
+			val filterOcfilter: String?,
+			@SerializedName("id")
+			val id: Int?,
+			@SerializedName("limit")
+			val limit: Int?,
+			@SerializedName("order")
+			val order: String?,
+			@SerializedName("path")
+			val path: String?,
+			@SerializedName("products")
+			val products: List<CatalogProduct?>?,
+			@SerializedName("sort")
+			val sort: String?,
+			@SerializedName("title")
+			val title: String?
+
+		],
+
+		"sort_variants": [
+			//val sortVariants: List<SortVariant?>?
+		],
+
+		},
+	"error": {
+			"error": "123",
+			"message": "123"
+		}
+}

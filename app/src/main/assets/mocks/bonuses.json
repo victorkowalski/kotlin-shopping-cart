@@ -1,0 +1,9 @@
+{
+	"success": {
+			"bonus": "25"
+		},
+	"error": {
+			"error": "123",
+			"message": "123"
+		}
+}

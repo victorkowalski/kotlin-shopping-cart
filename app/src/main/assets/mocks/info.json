@@ -1,0 +1,15 @@
+{
+	"success": {
+		"agreement":"agreement",
+		"birthday":"12.12.1970",
+		"gender": "m",
+		"lastName":"lastName",
+		"name":"name",
+		"phone":"phone",
+		"sureName":"sureName"
+		},
+	"error": {
+			"error": "123",
+			"message": "123"
+		}
+}
