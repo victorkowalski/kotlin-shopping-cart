@@ -1,36 +1,38 @@
 {
-	"success": {
-		"catalog": [
-			/*val catalog: List<CatalogItem?>?*/
-			{"description": }
-			@SerializedName("")
-			val description: String?,
-			@SerializedName("filter_ocfilter")
-			val filterOcfilter: String?,
-			@SerializedName("id")
-			val id: Int?,
-			@SerializedName("limit")
-			val limit: Int?,
-			@SerializedName("order")
-			val order: String?,
-			@SerializedName("path")
-			val path: String?,
-			@SerializedName("products")
-			val products: List<CatalogProduct?>?,
-			@SerializedName("sort")
-			val sort: String?,
-			@SerializedName("title")
-			val title: String?
-
-		],
-
-		"sort_variants": [
-			//val sortVariants: List<SortVariant?>?
-		],
-
-		},
-	"error": {
-			"error": "123",
-			"message": "123"
-		}
+  "success": {
+    "catalog": [
+      {
+        "description": "desc",
+        "filter_ocfilter": "filter_ocfilter",
+        "id": "1",
+        "limit": "15",
+        "order": "asc",
+        "path": "path",
+        "products": [
+          {
+            "discount": "8",
+            "id": "1",
+            "image": "image",
+            "price": "22",
+            "title": "tiltlttt",
+            "url_parameters": "url",
+            "type": "type",
+            "image": "img"
+          }
+        ],
+        "sort": "sort",
+        "title": "title"
+      }
+    ],
+    "sort_variants": [
+      {
+        "title": "title",
+        "url_parameters": "urlParams"
+      }
+    ]
+  },
+  "error": {
+    "error": "123",
+    "message": "123"
+  }
 }
