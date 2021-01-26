@@ -5,9 +5,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
 
-        <item name="editTextStyle">@style/EBashEditText</item>
-        <item name="buttonStyle">@style/EBashButton</item>
-        <item name="checkboxStyle">@style/ECheckBox</item>
+        <item name="editTextStyle">@style/SCartEditText</item>
+        <item name="buttonStyle">@style/SCartButton</item>
+        <item name="checkboxStyle">@style/SCartCheckBox</item>
 
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:fontFamily">@font/montserrat</item>
@@ -21,7 +21,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="EBashEditText" parent="Widget.AppCompat.EditText">
+    <style name="SCartEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_background</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
@@ -32,7 +32,7 @@
         <item name="android:textSize">13sp</item>
     </style>
 
-    <style name="EBashButton" parent="Base.Widget.AppCompat.Button">
+    <style name="SCartButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@drawable/button_background</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:paddingEnd">10dp</item>
@@ -46,7 +46,7 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
-    <style name="ECheckBox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="SCartCheckBox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:paddingStart">@dimen/padding_checkbox</item>
         <item name="android:button">@drawable/checkbox_button</item>
     </style>

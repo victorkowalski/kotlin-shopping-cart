@@ -52,7 +52,7 @@
                           tools:ignore="SmallSp"/>
 
                 <br.com.sapereaude.maskedEditText.MaskedEditText
-                        style="@style/EBashEditText"
+                        style="@style/SCartEditText"
                         android:id="@+id/phoneTextEdit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
