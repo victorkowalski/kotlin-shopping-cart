@@ -1,4 +1,4 @@
-package com.victor.ko.shopping_cart
+package com.victor.ko.scart
 
 import org.junit.Test
 

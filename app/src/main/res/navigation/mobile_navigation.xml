@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/mobile_navigation" app:startDestination="@id/catalogFragment">
+
+    <fragment android:id="@+id/catalogFragment"
+              android:name="today.e_bash.cityrose.fragments.CatalogFragment"
+              android:label="@string/short_catalog">
+        <action android:id="@+id/action_catalogFragment_to_productFragment"
+                app:destination="@id/productFragment"/>
+        <action android:id="@+id/action_catalogFragment_to_fullCatalogFragment"
+                app:destination="@id/fullCatalogFragment"/>
+    </fragment>
+
+</navigation>

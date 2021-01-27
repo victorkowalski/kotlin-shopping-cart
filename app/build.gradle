@@ -43,8 +43,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    //
+    //navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
+    implementation 'android.arch.navigation:navigation-ui-ktx:2.3.2'
     //masked edit
     implementation 'ru.egslava:MaskedEditText:1.0.5'
     //UI binding
@@ -55,6 +56,9 @@ dependencies {
     //*******
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+
+    //db
+    implementation 'io.paperdb:paperdb:2.6'
     //test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

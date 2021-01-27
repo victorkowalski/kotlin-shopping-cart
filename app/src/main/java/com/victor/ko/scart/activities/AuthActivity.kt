@@ -5,10 +5,11 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.victor.ko.shopping_cart.BuildConfig
-import com.victor.ko.shopping_cart.R
+import androidx.viewbinding.BuildConfig
+import com.victor.ko.scart.R
 import com.victor.ko.scart.network.ApiAdapter
-import com.victor.ko.shopping_cart.databinding.ActivityAuthBinding
+import com.victor.ko.scart.databinding.ActivityAuthBinding
+import io.paperdb.Paper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,7 +44,8 @@ class AuthActivity : AppCompatActivity() {
         countDownTimer.start()
 
 //***************
-        CoroutineScope(Dispatchers.Main).launch() {
+        //GlobalScope.launch(Dispatchers.IO)
+        CoroutineScope(Dispatchers.IO).launch() {
             // Try catch block to handle exceptions when calling the API.
             try {
                 val response = ApiAdapter.apiClient.getPin("${bnd.phoneTextEdit.text} test", "1")
@@ -59,7 +61,7 @@ class AuthActivity : AppCompatActivity() {
 
                     when {
                         data.success != null -> {
-                            //Paper.book().write("authToken", pin.success.token)
+                            Paper.book().write("authToken", data.success.token)
                             bnd.sendCodeForm?.visibility = View.VISIBLE
                             if (BuildConfig.DEBUG) {
                                 bnd.pinTextEdit.setText(data.success.pin)
@@ -74,22 +76,21 @@ class AuthActivity : AppCompatActivity() {
                 } else {
                     // Show API error.
                     // This is when the server responded with an error.
-                    /*Toast.makeText(
-                        this@MainActivity,
+                    Toast.makeText(
+                        this@AuthActivity,
                         "Error Occurred: ${response.message()}",
-                        Toast.LENGTH_LONG).show()*/
+                        Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 // Show API error. This is the error raised by the client.
                 // The API probably wasn't called in this case, so better check before assuming.
 
-                /*Toast.makeText(this@MainActivity,
+                Toast.makeText(this@AuthActivity,
                         "Error Occurred: ${e.message}",
-                        Toast.LENGTH_LONG).show()*/
+                        Toast.LENGTH_LONG).show()
             }
         }
-        //**********************
     }
 
     private val countDownTimer = object : CountDownTimer(10000, 1000) {

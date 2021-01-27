@@ -2,6 +2,7 @@ package com.victor.ko.scart.app
 
 import android.app.Application
 import android.content.Context
+import io.paperdb.Paper
 
 class SCartApplication : Application() {
 
@@ -13,5 +14,8 @@ class SCartApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+
+        /* Storage */
+        Paper.init(applicationContext)
     }
 }
