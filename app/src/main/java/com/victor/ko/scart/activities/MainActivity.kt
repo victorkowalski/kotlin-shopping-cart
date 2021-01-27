@@ -1,37 +1,18 @@
 package com.victor.ko.scart.activities
 
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
-import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import com.victor.ko.scart.R
 import com.victor.ko.scart.databinding.ActivityMainBinding
 import io.paperdb.Paper
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.menu_basket_layout.view.*
-import kotlinx.android.synthetic.main.navigation_view_header.*
-import org.greenrobot.eventbus.EventBus
-import org.jetbrains.anko.toast
-import today.e_bash.cityrose.events.ErrorEvent
-import today.e_bash.cityrose.events.UpdateCart
-import today.e_bash.cityrose.model.Bonus
-import today.e_bash.cityrose.model.Cart
-import today.e_bash.cityrose.model.Info
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,154 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bnd: ActivityMainBinding
     private val accessToken = Paper.book().read<String>("accessToken") ?: ""
     //private val compositeDisposable = CompositeDisposable()
-
-    private fun setCartItemsCount(count: Int) {
-        try {
-            val navBottom = findViewById<BottomNavigationView?>(R.id.nav_bottom)
-            val bottomCartItem = navBottom?.menu?.findItem(R.id.cartFragment)
-            if (count > 0) {
-                bottomCartItem?.setIcon(R.drawable.ic_not_empty_cart)
-            } else {
-                bottomCartItem?.setIcon(R.drawable.ic_shopping_cart)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun setCartTotalPrice(price: String, count: Int) {
-        try {
-            val navView = findViewById<NavigationView?>(R.id.nav_view)
-            val basket = navView?.menu?.findItem(R.id.cartFragment)?.actionView as? LinearLayout
-            basket?.let { t ->
-                val priceFormat = resources.getString(R.string.price)
-                t.count?.visibility = if (count > 0) View.VISIBLE else View.GONE
-                t.count?.text = String.format(priceFormat, price)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
-    }
-
-    private fun closeNavigationView() {
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawer?.closeDrawer(Gravity.START, true)
-    }
-
-    private fun openNavigationView() {
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawer?.openDrawer(Gravity.START, true)
-    }
-
-    private fun loadBonuses() {
-        try {
-            val accessToken = Paper.book()
-                .read<String>("accessToken") ?: throw Exception("Don't have access token")
-
-            api.bonuses(accessToken)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(object : Observer<Bonus> {
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        compositeDisposable.add(d)
-                    }
-
-                    override fun onNext(bonus: Bonus) {
-                        when {
-                            bonus.success != null -> {
-                                val pointsFormat = resources.getString(R.string.points_format)
-                                balance?.text = String.format(pointsFormat, bonus.success.bonus.toString())
-                            }
-                            bonus.error != null -> {
-                                toast(bonus.error.message.toString()).show()
-                            }
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        EventBus.getDefault().post(ErrorEvent(e))
-                    }
-                })
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun loadPersonalInfo() {
-        try {
-            val accessToken = Paper.book()
-                .read<String>("accessToken") ?: throw Exception("Don't have access token")
-            val navView = findViewById<NavigationView?>(R.id.nav_view)
-            val navViewHeader = navView?.getHeaderView(0)
-            val name = navViewHeader?.findViewById<TextView?>(R.id.name)
-
-            api.info(accessToken)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(object : Observer<Info> {
-                    override fun onComplete() {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        compositeDisposable.add(d)
-                    }
-
-                    override fun onNext(info: Info) {
-                        when {
-                            info.success != null -> {
-                                name?.text = info.success.name.toString()
-                            }
-                            info.error != null -> {
-                                toast(info.error.message.toString()).show()
-                            }
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        EventBus.getDefault().post(ErrorEvent(e))
-                    }
-
-                })
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun loadCartInfo() {
-        try {
-            api.cart(accessToken)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Cart.CartResponse> {
-                    override fun onComplete() {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        compositeDisposable.add(d)
-                    }
-
-                    override fun onNext(t: Cart.CartResponse) {
-                        if (t.success == null) return
-                        EventBus.getDefault().post(UpdateCart(t.success.goods.size, t.success.totalPrice ?: ""))
-                    }
-
-                    override fun onError(e: Throwable) {
-                        EventBus.getDefault().post(ErrorEvent(e))
-                    }
-                })
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -200,37 +33,22 @@ class MainActivity : AppCompatActivity() {
 
         val navView = bnd.navView
         val navBottom = bnd.navBottom
-        val toolbar = bnd.toolbar
 
-        navView?.setupWithNavController(navController)
-        navBottom?.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
+        navBottom.setupWithNavController(navController)
 
-        navBottom?.itemIconTintList = null
+        navBottom.itemIconTintList = null
 
-        /* устанавливаем listener на иконку профиля в actionbar */
-        /*val profileIcon = toolbar?.findViewById<ImageView?>(R.id.profile_icon)
-        profileIcon?.setOnClickListener {
-            navController.currentDestination?.id?.let { currentFragmentId ->
-                if (currentFragmentId != R.id.personalAreaFragment) {
-                    navController.navigate(R.id.personalAreaFragment)
-                }
-            }
-        }*/
+        bnd.title.typeface = ResourcesCompat.getFont(this, R.font.montserrat_medium)
 
-        /* Set action bar title font */
-        val actionBarTitleView = toolbar?.findViewById<TextView?>(R.id.title)
-        actionBarTitleView?.typeface = ResourcesCompat.getFont(this, R.font.montserrat_medium)
-
-        /* устанавливаем listener на иконку меню в actionbar */
-        val menuButton = toolbar?.findViewById<ImageView?>(R.id.menu_icon)
-        menuButton?.let { mb ->
+        bnd.menuIcon.let { mb ->
             mb.setOnClickListener {
-                openNavigationView()
+                bnd.drawerLayout.openDrawer(GravityCompat.START, true)
             }
         }
 
-        navView?.setNavigationItemSelectedListener { it ->
-            closeNavigationView()
+        navView.setNavigationItemSelectedListener { it ->
+
             val status = NavigationUI.onNavDestinationSelected(it, navController)
 
             /* Если успешно перешли на новый Fragment - скрываем боковую панель */
@@ -239,25 +57,30 @@ class MainActivity : AppCompatActivity() {
             }
 
             /* Если такой же menuItem есть и на нижнем меню - ставим его как активный */
-            val item = navBottom?.menu?.findItem(it.itemId)
-            navBottom?.selectedItemId = item?.itemId ?: 0
+            //todo
+            val item = navBottom.menu.findItem(it.itemId)
+            navBottom.selectedItemId = item.itemId
 
             return@setNavigationItemSelectedListener status
         }
 
-        navBottom?.setOnNavigationItemSelectedListener {
+        navBottom.setOnNavigationItemSelectedListener {
             val status = NavigationUI.onNavDestinationSelected(it, navController)
 
             /* Если такой же menuItem есть и в боковом меню - ставим его как активный */
-            val item = navView?.menu?.findItem(it.itemId)
-            navView?.setCheckedItem(item?.itemId ?: 0)
+            val item = navView.menu.findItem(it.itemId)
+            navView.setCheckedItem(item?.itemId ?: 0)
 
             return@setOnNavigationItemSelectedListener status
         }
 
-        loadBonuses()
-        loadPersonalInfo()
-        loadCartInfo()
+        //loadBonuses()
+        //loadPersonalInfo()
+        //loadCartInfo()
+    }
+
+    private fun closeNavigationView() {
+        bnd.drawerLayout.closeDrawer(GravityCompat.START, true)
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
@@ -292,4 +115,5 @@ class MainActivity : AppCompatActivity() {
         setCartTotalPrice(cartInfo.totalPrice, cartInfo.itemsCount)
         setCartItemsCount(cartInfo.itemsCount)
     }*/
+
 }

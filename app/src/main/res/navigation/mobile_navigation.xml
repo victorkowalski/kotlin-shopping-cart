@@ -4,12 +4,12 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/mobile_navigation" app:startDestination="@id/catalogFragment">
 
     <fragment android:id="@+id/catalogFragment"
-              android:name="today.e_bash.cityrose.fragments.CatalogFragment"
+              android:name="com.victor.ko.scart.fragments.CatalogFragment"
               android:label="@string/short_catalog">
-        <action android:id="@+id/action_catalogFragment_to_productFragment"
+        <!--action android:id="@+id/action_catalogFragment_to_productFragment"
                 app:destination="@id/productFragment"/>
         <action android:id="@+id/action_catalogFragment_to_fullCatalogFragment"
-                app:destination="@id/fullCatalogFragment"/>
+                app:destination="@id/fullCatalogFragment"/-->
     </fragment>
 
 </navigation>

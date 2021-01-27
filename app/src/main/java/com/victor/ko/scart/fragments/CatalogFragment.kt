@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import io.paperdb.Paper
@@ -40,7 +41,7 @@ import today.e_bash.cityrose.model.CatalogSuccess
 import today.e_bash.cityrose.tools.EBashApi
 
 
-class CatalogFragment : EFragment() {
+class CatalogFragment : SFragment() {
 
     val TAG = "CatalogFragment"
 
