@@ -9,6 +9,7 @@ import androidx.viewbinding.BuildConfig
 import com.victor.ko.scart.R
 import com.victor.ko.scart.network.ApiAdapter
 import com.victor.ko.scart.databinding.ActivityAuthBinding
+import com.victor.ko.scart.utils.toast
 import io.paperdb.Paper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +44,6 @@ class AuthActivity : AppCompatActivity() {
         countDownTimer.cancel()
         countDownTimer.start()
 
-//***************
-        //GlobalScope.launch(Dispatchers.IO)
         CoroutineScope(Dispatchers.IO).launch() {
             // Try catch block to handle exceptions when calling the API.
             try {
@@ -74,8 +73,7 @@ class AuthActivity : AppCompatActivity() {
 
 
                 } else {
-                    // Show API error.
-                    // This is when the server responded with an error.
+
                     Toast.makeText(
                         this@AuthActivity,
                         "Error Occurred: ${response.message()}",
