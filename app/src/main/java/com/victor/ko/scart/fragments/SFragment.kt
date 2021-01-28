@@ -5,15 +5,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.JsonObject
 import com.victor.ko.scart.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.sdk27.coroutines.onClick
 
 open class SFragment : Fragment() {
     private val TAG = "SFragment"
@@ -33,15 +33,18 @@ open class SFragment : Fragment() {
         }
     }
 
+    private fun getMainActivityToolbar(): Toolbar {
+        return ((activity as AppCompatActivity).supportActionBar) as Toolbar
+    }
+
     private fun setFilterIconVisible(v: Int) {
-        val toolbar = activity?.toolbar
-        val filterIcon = toolbar?.findViewById<ImageView>(R.id.filter_icon)
+        val filterIcon = getMainActivityToolbar().findViewById<ImageView>(R.id.filter_icon)
         filterIcon?.visibility = v
     }
 
     private fun setFilterIconClickListener(listener: () -> Unit) {
         try {
-            val filterIcon = activity?.toolbar?.findViewById<ImageView>(R.id.filter_icon)
+            val filterIcon = getMainActivityToolbar().findViewById<ImageView>(R.id.filter_icon)
             filterIcon?.onClick {
                 /*val args = Bundle()
                 navController.navigate(R.id.filterFragment, args)*/
@@ -73,9 +76,6 @@ open class SFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val toolbar = activity?.toolbar
-        val textView = toolbar?.findViewById<TextView>(R.id.title)
-        textView?.text = this.actionBarTitle
+        getMainActivityToolbar().findViewById<TextView>(R.id.title).text = this.actionBarTitle
     }
 }

@@ -2,11 +2,8 @@ package com.victor.ko.scart.fragments
 
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +11,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.BuildConfig
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.victor.ko.scart.R
 import com.victor.ko.scart.databinding.FragmentCatalogBinding
 import com.victor.ko.scart.models.CatalogItem
@@ -27,26 +20,9 @@ import com.victor.ko.scart.models.CatalogSuccess
 import com.victor.ko.scart.network.ApiAdapter
 import com.victor.ko.scart.utils.toast
 import io.paperdb.Paper
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_catalog.*
-import kotlinx.android.synthetic.main.item_product.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.jetbrains.anko.*
-import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.support.v4.dip
-import today.e_bash.cityrose.events.ErrorEvent
-import today.e_bash.cityrose.model.Catalog
-import today.e_bash.cityrose.model.CatalogItem
-import today.e_bash.cityrose.model.CatalogSuccess
-import today.e_bash.cityrose.tools.EBashApi
 
 
 class CatalogFragment : SFragment() {
@@ -77,10 +53,10 @@ class CatalogFragment : SFragment() {
 //*****************************************/ RecyclerView /**************************//
 
     class CatalogViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val image: ImageView? = view.previewImage
-        val title: TextView? = view.title
-        val price: TextView? = view.price
-        val discount: TextView? = view.discount
+        val image: ImageView? = view.findViewById(R.id.previewImage)
+        val title: TextView? = view.findViewById(R.id.title)
+        val price: TextView? = view.findViewById(R.id.price)
+        val discount: TextView? = view.findViewById(R.id.discount)
     }
 
     class MoreItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -110,8 +86,7 @@ class CatalogFragment : SFragment() {
                         .inflate(R.layout.item_more, parent, false)
                 )
                 else -> CatalogViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_product, parent, false)
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
                 )
             }
         }
@@ -126,7 +101,7 @@ class CatalogFragment : SFragment() {
                 try {
                     val item = catalogItem.products?.get(position) ?: return
                     p.title?.text = item.title
-                    p.title?.textColor = Color.parseColor("#000000")
+                    p.title?.setTextColor(Color.parseColor("#000000"));
                     p.discount?.context?.let { ctx ->
                         p.discount.typeface = ResourcesCompat.getFont(ctx, R.font.montserrat_bold)
                     }
@@ -137,13 +112,13 @@ class CatalogFragment : SFragment() {
                     val priceStringFormat = p.itemView.context?.getString(R.string.price).toString()
                     when {
                         item.discount?.toFloat() == item.price?.toFloat() || item.discount?.toFloat() == 0F -> {
-                            p.price?.textColor = Color.parseColor("#000000")
+                            p.price?.setTextColor(Color.parseColor("#000000"));
                             p.price?.text = String.format(priceStringFormat, item.price)
                             p.discount?.visibility = View.GONE
                         }
                         item.discount?.toFloat()?.compareTo(item.price?.toFloat() ?: 0f) ?: 0 < 0 -> {
-                            p.price?.textColor = Color.parseColor("#C4C4C4")
-                            p.discount?.textColor = Color.parseColor("#000000")
+                            p.price?.setTextColor(Color.parseColor("#C4C4C4"));
+                            p.discount?.setTextColor(Color.parseColor("#000000"))
                             p.discount?.text = String.format(priceStringFormat, item.discount)
                             p.price?.text = String.format(priceStringFormat, item.price)
                             p.price?.paintFlags = p.price?.paintFlags?.or(Paint.STRIKE_THRU_TEXT_FLAG)!!
@@ -160,7 +135,7 @@ class CatalogFragment : SFragment() {
                         Glide.with(it).load(Uri.parse("file:///android_asset/mocks/img/"+item.image)).into(it)
                     }
 
-                    p.itemView.onClick {
+                    /*p.itemView.onClick {
                         try {
                             val args = Bundle()
                             args.putSerializable("product", Gson().toJson(item))
@@ -170,20 +145,20 @@ class CatalogFragment : SFragment() {
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-                    }
+                    }*/
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
 
-            if (p is MoreItemViewHolder) {
+            /*if (p is MoreItemViewHolder) {
                 p.itemView.onClick {
                     val args = Bundle()
                     args.putSerializable("catalogItem", Gson().toJson(catalogItem))
                     p.itemView.findNavController()
                         .navigate(R.id.action_catalogFragment_to_fullCatalogFragment, args)
                 }
-            }
+            }*/
         }
     }
 
@@ -202,8 +177,8 @@ class CatalogFragment : SFragment() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 subtitleLayoutParams.setMargins(12, 0, 12, 0)
-
-                bnd.catalogRootView.verticalLayout {
+/*todo
+                bnd.catalogRootView.onclverticalLayout {
                     verticalLayout {
                         onClick {
                             try {
@@ -269,7 +244,7 @@ class CatalogFragment : SFragment() {
                             topMargin = dip(26)
                         }
                     }
-                }
+                }*/
             }
         } catch (e: Exception) {
             e.printStackTrace()
